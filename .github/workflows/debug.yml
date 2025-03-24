@@ -30,4 +30,8 @@ jobs:
       - name: Build
         run: dotnet build
       - name: Run - read args from command line and print them
-        run: dotnet run --project .\ConsoleApp\ConsoleApp.csproj --flavor="${{inputs.flavor}}" --environment="${{inputs.environment}}" --version="${{inputs.version}}"
+        run: |
+              echo "Flavor: ${{ inputs.flavor }}"
+              echo "Environment: ${{ inputs.environment }}"
+              echo "Version: ${{ inputs.version }}"
+              dotnet run --project .\ConsoleApp\ConsoleApp.csproj --flavor="${{ inputs.flavor }}" --environment="${{ inputs.environment }}" --version="${{ inputs.version }}"
