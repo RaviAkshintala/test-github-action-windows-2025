@@ -1,28 +1,39 @@
-name: Showcase problem with windows-2025 image
+name: Run .NET Application
 
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Environment: whether the final installed artifact should point to staging or production apis, and whether the final artifact should be uploaded to staging or production backoffice'
-        required: true
       flavor:
-        description: 'Flavor: which flavor of the artifact should be created by the setup'
+        description: 'Choose the flavor'
         required: true
+        default: 'chocolate'
+      environment:
+        description: 'Select environment'
+        required: true
+        default: 'staging'
       version:
-        description: 'Version: the sem-ver of the artifact. Will also be appended to the setup filename'
+        description: 'Enter version'
         required: true
-        type: string
+        default: '1.0.0'
 
 jobs:
-  upload-setup-artifact:
-    runs-on: windows-2025
+  build:
+    runs-on: windows-latest
+    
     steps:
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Checkout repository
-        uses: actions/checkout@v3.5.2
-      - name: Build
-        run: dotnet build
-      - name: Run - read args from command line and print them
-        run: dotnet run --project .\ConsoleApp\ConsoleApp.csproj --f="${{inputs.flavor}}" --e="${{inputs.environment}}" --v="${{inputs.version}}"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0'
+
+      - name: Run .NET Application
+        run: |
+          echo "Flavor: ${{ inputs.flavor }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Version: ${{ inputs.version }}"
+          # Correct the argument format, without the equals sign
+          dotnet run --project .\ConsoleApp\ConsoleApp.csproj -f "${{ inputs.flavor }}" -e "${{ inputs.environment }}" -v "${{ inputs.version }}"
+        shell: pwsh
