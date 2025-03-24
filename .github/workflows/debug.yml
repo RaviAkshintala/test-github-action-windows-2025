@@ -5,16 +5,14 @@ on:
     inputs:
       environment:
         description: 'Environment: whether the final installed artifact should point to staging or production apis, and whether the final artifact should be uploaded to staging or production backoffice'
-        required: false
-        default: 'staging'  
+        required: true
       flavor:
         description: 'Flavor: which flavor of the artifact should be created by the setup'
         required: true
-        default: 'chocolate'
       version:
         description: 'Version: the sem-ver of the artifact. Will also be appended to the setup filename'
         required: true
-        default: '1.0.0'
+        type: string
 
 jobs:
   upload-setup-artifact:
@@ -27,9 +25,4 @@ jobs:
       - name: Build
         run: dotnet build
       - name: Run - read args from command line and print them
-        run: |
-               echo "Flavor: ${{ inputs.flavor }}"
-               echo "Environment: ${{ inputs.environment }}"
-               echo "Version: ${{ inputs.version }}"
-               dotnet run --project .\ConsoleApp\ConsoleApp.csproj --flavor "${{ inputs.flavor }}" --environment "${{ inputs.environment }}" --version "${{ inputs.version }}"
-        shell: pwsh
+        run: dotnet run --project .\ConsoleApp\ConsoleApp.csproj --flavor="${{inputs.flavor}}" --environment="${{inputs.environment}}" --version="${{inputs.version}}"
