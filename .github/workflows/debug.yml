@@ -29,9 +29,6 @@ jobs:
 
       - name: Run .NET Application
         run: |
-          echo "Flavor: ${{ inputs.flavor }}"
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Version: ${{ inputs.version }}"
-          # Correct the argument format, without the equals sign
+ 
           dotnet run --project .\ConsoleApp\ConsoleApp.csproj --f "${{ inputs.flavor }}" --e "${{ inputs.environment }}" --version "${{ inputs.version }}"
         shell: pwsh
