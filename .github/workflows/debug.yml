@@ -1,4 +1,4 @@
-name: Run .NET Application
+name: Showcase problem with windows-2025 image
 
 on:
   workflow_dispatch:
@@ -15,19 +15,17 @@ on:
         description: 'Enter version'
         required: true
         default: '1.0.0'
-
 jobs:
-  build:
-    runs-on: windows-latest
-    
+  upload-setup-artifact:
+    runs-on: windows-2025
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0'
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Checkout repository
+        uses: actions/checkout@v3.5.2
+      - name: Build
+        run: dotnet build
+    
 
       - name: Run .NET Application
         run: |
