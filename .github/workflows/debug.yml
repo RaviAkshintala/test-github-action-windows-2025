@@ -3,18 +3,16 @@ name: Showcase problem with windows-2025 image
 on:
   workflow_dispatch:
     inputs:
-      flavor:
-        description: 'Choose the flavor'
-        required: true
-        default: 'chocolate'
       environment:
-        description: 'Select environment'
+        description: 'Environment: whether the final installed artifact should point to staging or production apis, and whether the final artifact should be uploaded to staging or production backoffice'
         required: true
-        default: 'staging'
+      flavor:
+        description: 'Flavor: which flavor of the artifact should be created by the setup'
+        required: true
       version:
-        description: 'Enter version'
+        description: 'Version: the sem-ver of the artifact. Will also be appended to the setup filename'
         required: true
-        default: '1.0.0'
+        type: string
 jobs:
   upload-setup-artifact:
     runs-on: windows-2025
