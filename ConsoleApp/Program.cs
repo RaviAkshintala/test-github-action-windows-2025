@@ -1,12 +1,25 @@
-﻿using CommandLine;
-using ConsoleApp;
+using CommandLine;
+using System;
 
-var arguments = Parser.Default.ParseArguments<ProgramArgumentsReadDto>(args)?.Value;
-if (arguments == null)
+class Program
 {
-    throw new Exception("[DEV] could not parse arguments");
-}
+    static void Main(string[] args)
+    {
+        Parser.Default.ParseArguments<Options>(args)
+            .WithParsed(options =>
+            {
+                // Successfully parsed arguments
+                Console.WriteLine($"Flavor: {options.Flavor}");
+                Console.WriteLine($"Environment: {options.Environment}");
+                Console.WriteLine($"Version: {options.Version}");
 
-Console.WriteLine($"flavor: {arguments.Flavor}");
-Console.WriteLine($"environment: {arguments.Environment}");
-Console.WriteLine($"version: {arguments.Version}");
+                // You can now use these values in your application logic
+                // For example, run your setup logic here
+            })
+            .WithNotParsed(errors =>
+            {
+                // Handle any parsing errors (optional)
+                Console.WriteLine("Error parsing arguments");
+            });
+    }
+}
