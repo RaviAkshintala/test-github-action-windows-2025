@@ -5,11 +5,11 @@ namespace ConsoleApp;
 public record ProgramArgumentsReadDto
 {
     [Option('f', "flavor", Required = true, HelpText = "Which flavor of the artifact should be created by the setup")]
-    public required string Flavor { get; init; }
+    public required string Flavor { get; set; }
     
     [Option('e', "environment", Required = true, HelpText = "Whether the final installed artifact should point to staging or production apis, and whether the final artifact should be uploaded to staging or production backoffice")]
-    public required string Environment { get; init; }
+    public required string Environment { get; set; }
     
     [Option('v', "version", Required = true, HelpText = "The sem-ver of the artifact. Will also be appended to the setup filename")]
-    public required string Version { get; init; }
+    public required string Version { get; set; }
 }
