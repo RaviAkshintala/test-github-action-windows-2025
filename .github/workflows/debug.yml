@@ -28,5 +28,5 @@ jobs:
       - name: Run .NET Application
         run: |
  
-          dotnet run --project .\ConsoleApp\ConsoleApp.csproj --f "${{ inputs.flavor }}" --e "${{ inputs.environment }}" --version "${{ inputs.version }}"
+          dotnet run --project .\ConsoleApp\ConsoleApp.csproj --f "${{ inputs.flavor }}" --e "${{ inputs.environment }}" --v "${{ inputs.version }}"
         shell: pwsh
